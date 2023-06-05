@@ -13,13 +13,12 @@ if [[ $swap == 'y' ]] ; then
 	read -r "swapmem?Enter the swap memory: "
 	swapon $swapmem
 fi
-mkfs.ext4 $partition
 read -r "answer?Did you also create efi partition? [y/n] "
 if [[ $answer = "y" ]] ; then
-  echo "Enter EFI partition: "
-  read efipartition
+  read -r "efipartition?Enter EFI partition:"
   mkfs.vfat -F 32 $efipartition
 fi
+read -r "partition?Linux partition: "
 mount $partition /mnt 
 pacstrap /mnt base base-devel linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
